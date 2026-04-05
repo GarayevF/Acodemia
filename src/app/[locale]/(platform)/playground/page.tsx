@@ -3,17 +3,18 @@
 import { useState } from "react";
 import { CodeEditor } from "@/components/editor/code-editor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDict } from "@/lib/i18n/context";
 
 export default function PlaygroundPage() {
   const [language, setLanguage] = useState<"html" | "css" | "javascript" | "python">("javascript");
+  const dict = useDict();
+  const t = dict.playground;
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Kod Meydançası</h1>
-        <p className="text-muted-foreground">
-          Sərbəst kod yaz və sına — istədiyin dildə!
-        </p>
+        <h1 className="text-2xl font-bold">{t.title}</h1>
+        <p className="text-muted-foreground">{t.desc}</p>
       </div>
 
       <Tabs value={language} onValueChange={(v) => setLanguage(v as typeof language)}>

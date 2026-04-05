@@ -8,24 +8,28 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { href: "/dashboard", label: "İdarə paneli", icon: "📊" },
-  { href: "/lessons", label: "Dərslər", icon: "📚" },
-  { href: "/playground", label: "Kod meydançası", icon: "💻" },
-  { href: "/quiz", label: "Quizlər", icon: "🧠" },
-  { href: "/leaderboard", label: "Liderlik", icon: "🏆" },
-  { href: "/profile", label: "Profil", icon: "👤" },
-];
+import { useDict, useLocale } from "@/lib/i18n/context";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
+  const dict = useDict();
+  const locale = useLocale();
+
+  const navItems = [
+    { href: `/${locale}/dashboard`, label: dict.nav.dashboard, icon: "📊" },
+    { href: `/${locale}/lessons`, label: dict.nav.lessons, icon: "📚" },
+    { href: `/${locale}/playground`, label: dict.nav.playground, icon: "💻" },
+    { href: `/${locale}/quiz`, label: dict.nav.quiz, icon: "🧠" },
+    { href: `/${locale}/leaderboard`, label: dict.nav.leaderboard, icon: "🏆" },
+    { href: `/${locale}/profile`, label: dict.nav.profile, icon: "👤" },
+  ];
 
   async function handleLogout() {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/");
+    router.push(`/${locale}`);
     router.refresh();
   }
 
@@ -87,9 +91,12 @@ export function Header() {
       {/* Spacer for desktop */}
       <div className="hidden md:block" />
 
-      <Button variant="ghost" size="sm" onClick={handleLogout}>
-        Çıxış
-      </Button>
+      <div className="flex items-center gap-3">
+        <LanguageSwitcher />
+        <Button variant="ghost" size="sm" onClick={handleLogout}>
+          {dict.nav.logout}
+        </Button>
+      </div>
     </header>
   );
 }

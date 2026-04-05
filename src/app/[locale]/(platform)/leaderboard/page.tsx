@@ -2,8 +2,8 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-export const metadata = { title: "Liderlik cədvəli" };
+import { getDictionary, hasLocale } from "../../dictionaries";
+import { notFound } from "next/navigation";
 
 // Mock data — will come from Supabase
 const LEADERBOARD = [
@@ -25,7 +25,13 @@ const medalColors: Record<number, string> = {
   3: "text-amber-600",
 };
 
-function LeaderboardTable({ data }: { data: typeof LEADERBOARD }) {
+function LeaderboardTable({
+  data,
+  levelLabel,
+}: {
+  data: typeof LEADERBOARD;
+  levelLabel: string;
+}) {
   return (
     <div className="space-y-3">
       {data.map((user) => (
@@ -53,7 +59,7 @@ function LeaderboardTable({ data }: { data: typeof LEADERBOARD }) {
           <div className="text-right">
             <p className="font-bold text-primary">{user.xp} XP</p>
             <Badge variant="outline" className="text-xs">
-              Səviyyə {user.level}
+              {levelLabel} {user.level}
             </Badge>
           </div>
         </Card>
@@ -62,31 +68,39 @@ function LeaderboardTable({ data }: { data: typeof LEADERBOARD }) {
   );
 }
 
-export default function LeaderboardPage() {
+export default async function LeaderboardPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(locale)) notFound();
+  const dict = await getDictionary(locale);
+  const t = dict.leaderboard;
+
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold">Liderlik cədvəli</h1>
-        <p className="text-muted-foreground">
-          Ən yüksək XP-yə sahib şagirdlər
-        </p>
+        <h1 className="text-2xl font-bold">{t.title}</h1>
+        <p className="text-muted-foreground">{t.subtitle}</p>
       </div>
 
       <Tabs defaultValue="all">
         <TabsList>
-          <TabsTrigger value="all">Hamısı</TabsTrigger>
+          <TabsTrigger value="all">{t.all}</TabsTrigger>
           <TabsTrigger value="school1">45 nömrəli məktəb</TabsTrigger>
           <TabsTrigger value="school2">132 nömrəli məktəb</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="mt-6">
-          <LeaderboardTable data={LEADERBOARD} />
+          <LeaderboardTable data={LEADERBOARD} levelLabel={t.level} />
         </TabsContent>
         <TabsContent value="school1" className="mt-6">
           <LeaderboardTable
             data={LEADERBOARD.filter(
               (u) => u.school === "45 nömrəli məktəb"
             ).map((u, i) => ({ ...u, rank: i + 1 }))}
+            levelLabel={t.level}
           />
         </TabsContent>
         <TabsContent value="school2" className="mt-6">
@@ -94,6 +108,7 @@ export default function LeaderboardPage() {
             data={LEADERBOARD.filter(
               (u) => u.school === "132 nömrəli məktəb"
             ).map((u, i) => ({ ...u, rank: i + 1 }))}
+            levelLabel={t.level}
           />
         </TabsContent>
       </Tabs>

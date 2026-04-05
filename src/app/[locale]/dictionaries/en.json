@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "title": "Acodemia — Learn to Code",
+    "titleTemplate": "%s | Acodemia",
+    "description": "Interactive coding platform. Learn HTML, CSS, JavaScript and Python."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "lessons": "Lessons",
+    "playground": "Playground",
+    "quiz": "Quizzes",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "logout": "Log out",
+    "login": "Log in",
+    "register": "Start free"
+  },
+  "home": {
+    "badge": "Gamified coding platform",
+    "heroTitle1": "Learn to code,",
+    "heroTitle2": "build your",
+    "heroTitle3": "future.",
+    "heroDesc": "Learn HTML, CSS, JavaScript and Python with interactive lessons. Earn XP, level up, compete on the leaderboard!",
+    "startFree": "Start free →",
+    "seeLessons": "See lessons",
+    "freeCheck": "Completely free",
+    "azCheck": "Bilingual (AZ/EN)",
+    "realCodeCheck": "Write real code",
+    "whyTitle": "Why Acodemia?",
+    "whyDesc": "Features that make coding fun and accessible",
+    "features": [
+      {
+        "icon": "💻",
+        "title": "Write real code",
+        "desc": "Write code in your browser and see results instantly. No setup required."
+      },
+      {
+        "icon": "🎮",
+        "title": "Gamified learning",
+        "desc": "Earn XP, level up, collect badges and compete on the leaderboard."
+      },
+      {
+        "icon": "🌍",
+        "title": "Bilingual platform",
+        "desc": "All lessons, explanations and assignments available in Azerbaijani and English."
+      },
+      {
+        "icon": "📚",
+        "title": "CS curriculum",
+        "desc": "Lessons aligned with the national exam curriculum. From theory to practice."
+      },
+      {
+        "icon": "🏆",
+        "title": "Quizzes & exams",
+        "desc": "Test your knowledge, compete in timed quizzes and track your results."
+      },
+      {
+        "icon": "📱",
+        "title": "Access anywhere",
+        "desc": "Computer, tablet or phone — log in from any device."
+      }
+    ],
+    "curriculumTitle": "Curriculum",
+    "curriculumDesc": "4 modules, 20 interactive lessons",
+    "module": "Module",
+    "lessonCount": "lessons",
+    "ctaTitle": "Ready to code?",
+    "ctaDesc": "Sign up for free and complete your first lesson today.",
+    "ctaButton": "Start now →",
+    "copyright": "© 2026 Acodemia. All rights reserved.",
+    "location": "Baku, Azerbaijan"
+  },
+  "login": {
+    "pageTitle": "Log in",
+    "brandSlogan1": "Learn to code,",
+    "brandSlogan2": "build your future.",
+    "brandDesc": "Interactive lessons, gamified learning and real coding experience.",
+    "title": "Log in to your account",
+    "subtitle": "Enter your email and password",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Sign up"
+  },
+  "register": {
+    "pageTitle": "Sign up",
+    "brandSlogan1": "Start for free,",
+    "brandSlogan2": "learn to code.",
+    "brandDesc": "20 interactive lessons, gamified system and HTML, CSS, JavaScript, Python courses are waiting for you.",
+    "title": "Create a new account",
+    "subtitle": "Sign up for free and start coding",
+    "hasAccount": "Already have an account?",
+    "loginLink": "Log in"
+  },
+  "auth": {
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your name",
+    "email": "Email",
+    "emailPlaceholder": "example@mail.com",
+    "password": "Password",
+    "passwordPlaceholder": "Minimum 6 characters",
+    "loading": "Please wait...",
+    "loginButton": "Log in",
+    "registerButton": "Sign up"
+  },
+  "dashboard": {
+    "pageTitle": "Dashboard",
+    "welcome": "Welcome! 👋",
+    "welcomeDesc": "Continue your coding journey",
+    "level": "Level",
+    "completedLessons": "Completed lessons",
+    "badges": "Badges",
+    "continueTitle": "Continue",
+    "moduleLesson": "Module {module} — Lesson {lesson}",
+    "xpReward": "+{xp} XP reward",
+    "continue": "Continue →",
+    "modulesTitle": "Modules",
+    "module": "Module",
+    "lessonCount": "lessons"
+  },
+  "lessons": {
+    "pageTitle": "Lessons",
+    "title": "Lessons",
+    "subtitle": "4 modules, 20 interactive lessons",
+    "module": "Module",
+    "lessonCount": "lessons",
+    "start": "Start →",
+    "notFound": "Lesson not found",
+    "notFoundDesc": "This lesson is not ready yet. Coming soon!",
+    "backToLessons": "Back to lessons",
+    "lesson": "Lesson",
+    "complete": "Complete lesson",
+    "completed": "Completed ✓",
+    "prevLesson": "← Previous lesson",
+    "nextLesson": "Next lesson →"
+  },
+  "playground": {
+    "title": "Playground",
+    "desc": "Write and test code freely — in any language!"
+  },
+  "quiz": {
+    "pageTitle": "Quizzes",
+    "title": "Quizzes",
+    "subtitle": "Test your knowledge and earn XP",
+    "questions": "questions",
+    "minutes": "minutes",
+    "start": "Start →",
+    "startQuiz": "Start quiz",
+    "notFound": "Quiz not found",
+    "backToQuizzes": "Back to quizzes",
+    "questionOf": "Question {current} / {total}",
+    "explanation": "Explanation:",
+    "nextQuestion": "Next question →",
+    "finishQuiz": "Finish quiz",
+    "quizCompleted": "Quiz completed!",
+    "correctAnswers": "{score} / {total} correct answers",
+    "xpEarned": "+{xp} XP earned!",
+    "backToQuizzesBtn": "Back to quizzes",
+    "toDashboard": "Dashboard"
+  },
+  "leaderboard": {
+    "pageTitle": "Leaderboard",
+    "title": "Leaderboard",
+    "subtitle": "Students with the highest XP",
+    "all": "All",
+    "level": "Level"
+  },
+  "profile": {
+    "pageTitle": "Profile",
+    "levelProgress": "Level progress",
+    "level": "Level",
+    "xpToNext": "{xp} XP to next level",
+    "completedLessons": "Completed lessons",
+    "completedQuizzes": "Completed quizzes",
+    "streak": "Login streak",
+    "days": "days",
+    "badges": "Badges",
+    "badgesEncourage": "Complete more lessons to earn more badges!"
+  },
+  "modules": {
+    "1": "Computers & Logic",
+    "2": "HTML & CSS",
+    "3": "JavaScript Basics",
+    "4": "Intro to Python"
+  },
+  "levels": {
+    "1": "Beginner",
+    "2": "Code Explorer",
+    "3": "Programmer Student",
+    "4": "Web Master",
+    "5": "Code Wizard"
+  }
+}

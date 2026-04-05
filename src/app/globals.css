@@ -128,3 +128,39 @@
     @apply font-sans;
   }
 }
+
+/* Hero 3D card */
+.hero-card {
+  position: relative;
+  transform: perspective(1000px) rotateY(-8deg) rotateX(5deg);
+  transition: transform 0.6s ease-out;
+  box-shadow:
+    /* Thickness layers — each 1px offset builds the solid edge */
+    1px 1px 0 0 #0b1322,
+    2px 2px 0 0 #0a1220,
+    3px 3px 0 0 #0a111f,
+    4px 4px 0 0 #09101d,
+    5px 5px 0 0 #090f1c,
+    6px 6px 0 0 #080e1a,
+    7px 7px 0 0 #080d19,
+    8px 8px 0 0 #070c17,
+    9px 9px 0 0 #070b16,
+    10px 10px 0 0 #060a14,
+    11px 11px 0 0 #060a13,
+    12px 12px 0 0 #050911,
+    13px 13px 0 0 #050810,
+    14px 14px 0 0 #04070e,
+    15px 15px 0 0 #04070d,
+    16px 16px 0 0 #03060c,
+    /* Soft drop shadow */
+    24px 28px 40px -8px rgba(0, 0, 0, 0.45),
+    8px 12px 20px -4px rgba(0, 0, 0, 0.3);
+}
+.hero-card:hover {
+  transform: perspective(1000px) rotateY(-3deg) rotateX(2deg);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

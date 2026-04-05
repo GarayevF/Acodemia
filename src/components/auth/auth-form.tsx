@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useDict, useLocale } from "@/lib/i18n/context";
 
 interface AuthFormProps {
   mode: "login" | "register";
@@ -15,6 +16,9 @@ export function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const dict = useDict();
+  const locale = useLocale();
+  const t = dict.auth;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,7 +57,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       }
     }
 
-    router.push("/dashboard");
+    router.push(`/${locale}/dashboard`);
     router.refresh();
   }
 
@@ -61,33 +65,33 @@ export function AuthForm({ mode }: AuthFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {mode === "register" && (
         <div className="space-y-2">
-          <Label htmlFor="full_name">Ad və Soyad</Label>
+          <Label htmlFor="full_name">{t.fullName}</Label>
           <Input
             id="full_name"
             name="full_name"
             type="text"
-            placeholder="Adınızı daxil edin"
+            placeholder={t.fullNamePlaceholder}
             required
           />
         </div>
       )}
       <div className="space-y-2">
-        <Label htmlFor="email">E-poçt</Label>
+        <Label htmlFor="email">{t.email}</Label>
         <Input
           id="email"
           name="email"
           type="email"
-          placeholder="nümunə@mail.com"
+          placeholder={t.emailPlaceholder}
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="password">Şifrə</Label>
+        <Label htmlFor="password">{t.password}</Label>
         <Input
           id="password"
           name="password"
           type="password"
-          placeholder="Minimum 6 simvol"
+          placeholder={t.passwordPlaceholder}
           minLength={6}
           required
         />
@@ -99,10 +103,10 @@ export function AuthForm({ mode }: AuthFormProps) {
       )}
       <Button type="submit" className="w-full" size="lg" disabled={loading}>
         {loading
-          ? "Gözləyin..."
+          ? t.loading
           : mode === "login"
-            ? "Daxil ol"
-            : "Qeydiyyatdan keç"}
+            ? t.loginButton
+            : t.registerButton}
       </Button>
     </form>
   );

@@ -7,69 +7,103 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { useDict, useLocale } from "@/lib/i18n/context";
 
 // Sample quiz data — will come from Supabase
 const QUIZ_DATA: Record<
   string,
   {
-    title: string;
+    title_az: string;
+    title_en: string;
     timeLimit: number;
     questions: {
-      question: string;
-      options: string[];
+      question_az: string;
+      question_en: string;
+      options_az: string[];
+      options_en: string[];
       correct: number;
-      explanation: string;
+      explanation_az: string;
+      explanation_en: string;
     }[];
   }
 > = {
   "1": {
-    title: "Kompüterlər və Məntiq Quiz",
+    title_az: "Kompüterlər və Məntiq Quiz",
+    title_en: "Computers & Logic Quiz",
     timeLimit: 300,
     questions: [
       {
-        question: "Kompüterin əsas beyin hissəsi hansıdır?",
-        options: ["RAM", "CPU (Prosessor)", "Hard disk", "Monitor"],
+        question_az: "Kompüterin əsas beyin hissəsi hansıdır?",
+        question_en: "What is the main brain of a computer?",
+        options_az: ["RAM", "CPU (Prosessor)", "Hard disk", "Monitor"],
+        options_en: ["RAM", "CPU (Processor)", "Hard disk", "Monitor"],
         correct: 1,
-        explanation:
+        explanation_az:
           "CPU (Central Processing Unit) kompüterin əsas emal hissəsidir və bütün hesablamaları yerinə yetirir.",
+        explanation_en:
+          "CPU (Central Processing Unit) is the main processing part of a computer and performs all calculations.",
       },
       {
-        question: "HTML nə üçün istifadə olunur?",
-        options: [
+        question_az: "HTML nə üçün istifadə olunur?",
+        question_en: "What is HTML used for?",
+        options_az: [
           "Oyun yaratmaq",
           "Veb səhifə qurmaq",
           "Musiqi yazmaq",
           "Foto redaktə etmək",
         ],
+        options_en: [
+          "Creating games",
+          "Building web pages",
+          "Writing music",
+          "Editing photos",
+        ],
         correct: 1,
-        explanation:
+        explanation_az:
           "HTML (HyperText Markup Language) veb səhifələrin strukturunu yaratmaq üçün istifadə olunur.",
+        explanation_en:
+          "HTML (HyperText Markup Language) is used to create the structure of web pages.",
       },
       {
-        question:
-          "Aşağıdakılardan hansı proqramlaşdırma dili deyil?",
-        options: ["Python", "JavaScript", "HTML", "Java"],
+        question_az: "Aşağıdakılardan hansı proqramlaşdırma dili deyil?",
+        question_en: "Which of the following is NOT a programming language?",
+        options_az: ["Python", "JavaScript", "HTML", "Java"],
+        options_en: ["Python", "JavaScript", "HTML", "Java"],
         correct: 2,
-        explanation:
+        explanation_az:
           "HTML bir markup (işarələmə) dilidir, proqramlaşdırma dili deyil. O, veb səhifələrin strukturunu təyin edir.",
+        explanation_en:
+          "HTML is a markup language, not a programming language. It defines the structure of web pages.",
       },
       {
-        question: "1 baytda neçə bit var?",
-        options: ["4", "8", "16", "32"],
+        question_az: "1 baytda neçə bit var?",
+        question_en: "How many bits are in 1 byte?",
+        options_az: ["4", "8", "16", "32"],
+        options_en: ["4", "8", "16", "32"],
         correct: 1,
-        explanation: "1 bayt = 8 bit. Bu kompüter elminin əsas anlayışıdır.",
+        explanation_az: "1 bayt = 8 bit. Bu kompüter elminin əsas anlayışıdır.",
+        explanation_en: "1 byte = 8 bits. This is a fundamental concept in computer science.",
       },
       {
-        question: "Alqoritm nədir?",
-        options: [
+        question_az: "Alqoritm nədir?",
+        question_en: "What is an algorithm?",
+        options_az: [
           "Proqramlaşdırma dili",
           "Kompüter hissəsi",
           "Məsələni həll etmək üçün addım-addım təlimat",
           "İnternet brauzer",
         ],
+        options_en: [
+          "A programming language",
+          "A computer part",
+          "Step-by-step instructions for solving a problem",
+          "An internet browser",
+        ],
         correct: 2,
-        explanation:
+        explanation_az:
           "Alqoritm müəyyən bir məsələni həll etmək üçün ardıcıl addımlar toplusudur.",
+        explanation_en:
+          "An algorithm is a sequence of steps to solve a particular problem.",
       },
     ],
   },
@@ -77,6 +111,9 @@ const QUIZ_DATA: Record<
 
 export default function QuizPage() {
   const { quizId } = useParams<{ quizId: string }>();
+  const dict = useDict();
+  const locale = useLocale();
+  const t = dict.quiz;
   const quiz = QUIZ_DATA[quizId];
 
   const [started, setStarted] = useState(false);
@@ -104,25 +141,31 @@ export default function QuizPage() {
   if (!quiz) {
     return (
       <div className="max-w-2xl mx-auto text-center py-20">
-        <h1 className="text-2xl font-bold mb-4">Quiz tapılmadı</h1>
-        <Link href="/quiz">
-          <Button>Quizlərə qayıt</Button>
+        <h1 className="text-2xl font-bold mb-4">{t.notFound}</h1>
+        <Link href={`/${locale}/quiz`}>
+          <Button>{t.backToQuizzes}</Button>
         </Link>
       </div>
     );
   }
 
+  const quizTitle = locale === "az" ? quiz.title_az : quiz.title_en;
+
   if (!started) {
     return (
       <div className="max-w-lg mx-auto text-center py-20 space-y-6">
-        <h1 className="text-2xl font-bold">{quiz.title}</h1>
+        <h1 className="text-2xl font-bold">{quizTitle}</h1>
         <div className="flex justify-center gap-4 text-sm text-muted-foreground">
-          <span>{quiz.questions.length} sual</span>
+          <span>
+            {quiz.questions.length} {t.questions}
+          </span>
           <span>•</span>
-          <span>{Math.floor(quiz.timeLimit / 60)} dəqiqə</span>
+          <span>
+            {Math.floor(quiz.timeLimit / 60)} {t.minutes}
+          </span>
         </div>
         <Button size="lg" onClick={() => setStarted(true)}>
-          Quizə başla
+          {t.startQuiz}
         </Button>
       </div>
     );
@@ -136,18 +179,22 @@ export default function QuizPage() {
         : Math.round(20 + (score / quiz.questions.length) * 80);
     return (
       <div className="max-w-lg mx-auto text-center py-20 space-y-6">
-        <h1 className="text-2xl font-bold">Quiz tamamlandı!</h1>
+        <h1 className="text-2xl font-bold">{t.quizCompleted}</h1>
         <div className="text-6xl font-bold text-primary">{percentage}%</div>
         <p className="text-lg">
-          {score} / {quiz.questions.length} düzgün cavab
+          {t.correctAnswers
+            .replace("{score}", String(score))
+            .replace("{total}", String(quiz.questions.length))}
         </p>
-        <Badge className="text-base px-4 py-1">+{xpEarned} XP qazandın!</Badge>
+        <Badge className="text-base px-4 py-1">
+          {t.xpEarned.replace("{xp}", String(xpEarned))}
+        </Badge>
         <div className="flex justify-center gap-3 pt-4">
-          <Link href="/quiz">
-            <Button variant="outline">Quizlərə qayıt</Button>
+          <Link href={`/${locale}/quiz`}>
+            <Button variant="outline">{t.backToQuizzesBtn}</Button>
           </Link>
-          <Link href="/dashboard">
-            <Button>İdarə paneli</Button>
+          <Link href={`/${locale}/dashboard`}>
+            <Button>{t.toDashboard}</Button>
           </Link>
         </div>
       </div>
@@ -155,6 +202,9 @@ export default function QuizPage() {
   }
 
   const q = quiz.questions[currentQ];
+  const question = locale === "az" ? q.question_az : q.question_en;
+  const options = locale === "az" ? q.options_az : q.options_en;
+  const explanation = locale === "az" ? q.explanation_az : q.explanation_en;
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
@@ -182,7 +232,9 @@ export default function QuizPage() {
       {/* Progress & timer */}
       <div className="flex items-center justify-between">
         <span className="text-sm text-muted-foreground">
-          Sual {currentQ + 1} / {quiz.questions.length}
+          {t.questionOf
+            .replace("{current}", String(currentQ + 1))
+            .replace("{total}", String(quiz.questions.length))}
         </span>
         <Badge variant={timeLeft < 60 ? "destructive" : "outline"}>
           {minutes}:{seconds.toString().padStart(2, "0")}
@@ -195,9 +247,9 @@ export default function QuizPage() {
 
       {/* Question */}
       <Card className="p-6">
-        <h2 className="text-lg font-semibold mb-6">{q.question}</h2>
+        <h2 className="text-lg font-semibold mb-6">{question}</h2>
         <div className="space-y-3">
-          {q.options.map((option, i) => {
+          {options.map((option, i) => {
             let style = "border-2 border-muted hover:border-primary/50";
             if (answered) {
               if (i === q.correct) style = "border-2 border-green-500 bg-green-50";
@@ -225,7 +277,7 @@ export default function QuizPage() {
         {answered && (
           <div className="mt-4 p-4 bg-muted rounded-xl">
             <p className="text-sm">
-              <strong>İzah:</strong> {q.explanation}
+              <strong>{t.explanation}</strong> {explanation}
             </p>
           </div>
         )}
@@ -235,8 +287,8 @@ export default function QuizPage() {
         <div className="flex justify-end">
           <Button onClick={handleNext}>
             {currentQ < quiz.questions.length - 1
-              ? "Növbəti sual →"
-              : "Quizi bitir"}
+              ? t.nextQuestion
+              : t.finishQuiz}
           </Button>
         </div>
       )}

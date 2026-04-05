@@ -3,14 +3,23 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { MODULES } from "@/types";
 import Link from "next/link";
+import { getDictionary, hasLocale } from "../../dictionaries";
+import { notFound } from "next/navigation";
 
-export const metadata = { title: "İdarə paneli" };
+export default async function DashboardPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(locale)) notFound();
+  const dict = await getDictionary(locale);
+  const t = dict.dashboard;
 
-export default function DashboardPage() {
   // TODO: Fetch real data from Supabase
   const xp = 150;
   const level = 2;
-  const levelTitle = "Kod Kəşfçisi";
+  const levelTitle = dict.levels["2"];
   const lessonsCompleted = 3;
   const totalLessons = 20;
   const levelProgress = 50;
@@ -19,10 +28,8 @@ export default function DashboardPage() {
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Welcome */}
       <div>
-        <h1 className="text-2xl font-bold">Xoş gəldin! 👋</h1>
-        <p className="text-muted-foreground">
-          Kodlama səyahətinə davam et
-        </p>
+        <h1 className="text-2xl font-bold">{t.welcome}</h1>
+        <p className="text-muted-foreground">{t.welcomeDesc}</p>
       </div>
 
       {/* Stats */}
@@ -30,13 +37,11 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Səviyyə
+              {t.level}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">
-              {level}
-            </div>
+            <div className="text-2xl font-bold text-primary">{level}</div>
             <p className="text-sm text-muted-foreground">{levelTitle}</p>
           </CardContent>
         </Card>
@@ -54,7 +59,7 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Tamamlanan dərslər
+              {t.completedLessons}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -70,32 +75,40 @@ export default function DashboardPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Nişanlar
+              {t.badges}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">1</div>
-            <p className="text-sm text-muted-foreground">İlk Addım 🏅</p>
+            <p className="text-sm text-muted-foreground">
+              {locale === "az" ? "İlk Addım" : "First Step"} 🏅
+            </p>
           </CardContent>
         </Card>
       </div>
 
       {/* Continue learning */}
       <div>
-        <h2 className="text-lg font-semibold mb-4">Davam et</h2>
+        <h2 className="text-lg font-semibold mb-4">{t.continueTitle}</h2>
         <Card className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">Modul 1 — Dərs 4</p>
+              <p className="text-sm text-muted-foreground">
+                {t.moduleLesson
+                  .replace("{module}", "1")
+                  .replace("{lesson}", "4")}
+              </p>
               <h3 className="text-lg font-semibold">
-                İlk kodunuz: &quot;Salam, Dünya!&quot;
+                {locale === "az"
+                  ? 'İlk kodunuz: "Salam, Dünya!"'
+                  : 'Your first code: "Hello, World!"'}
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
-                +50 XP qazanacaqsan
+                {t.xpReward.replace("{xp}", "50")}
               </p>
             </div>
-            <Link href="/lessons/4">
-              <Button>Davam et →</Button>
+            <Link href={`/${locale}/lessons/4`}>
+              <Button>{t.continue}</Button>
             </Link>
           </div>
         </Card>
@@ -103,18 +116,20 @@ export default function DashboardPage() {
 
       {/* Modules overview */}
       <div>
-        <h2 className="text-lg font-semibold mb-4">Modullar</h2>
+        <h2 className="text-lg font-semibold mb-4">{t.modulesTitle}</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {MODULES.map((mod) => (
-            <Link key={mod.id} href={`/lessons?module=${mod.id}`}>
+            <Link key={mod.id} href={`/${locale}/lessons?module=${mod.id}`}>
               <Card className="p-5 hover:border-primary/50 transition-colors cursor-pointer">
                 <div className="text-3xl mb-2">{mod.icon}</div>
-                <h3 className="font-semibold text-sm">Modul {mod.id}</h3>
+                <h3 className="font-semibold text-sm">
+                  {t.module} {mod.id}
+                </h3>
                 <p className="text-primary text-sm font-medium">
-                  {mod.title_az}
+                  {dict.modules[String(mod.id) as keyof typeof dict.modules]}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {mod.lessons} dərs
+                  {mod.lessons} {t.lessonCount}
                 </p>
               </Card>
             </Link>

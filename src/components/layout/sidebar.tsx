@@ -4,23 +4,26 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoFull } from "@/components/logo";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { href: "/dashboard", label: "İdarə paneli", icon: "📊" },
-  { href: "/lessons", label: "Dərslər", icon: "📚" },
-  { href: "/playground", label: "Kod meydançası", icon: "💻" },
-  { href: "/quiz", label: "Quizlər", icon: "🧠" },
-  { href: "/leaderboard", label: "Liderlik", icon: "🏆" },
-  { href: "/profile", label: "Profil", icon: "👤" },
-];
+import { useDict, useLocale } from "@/lib/i18n/context";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const dict = useDict();
+  const locale = useLocale();
+
+  const navItems = [
+    { href: `/${locale}/dashboard`, label: dict.nav.dashboard, icon: "📊" },
+    { href: `/${locale}/lessons`, label: dict.nav.lessons, icon: "📚" },
+    { href: `/${locale}/playground`, label: dict.nav.playground, icon: "💻" },
+    { href: `/${locale}/quiz`, label: dict.nav.quiz, icon: "🧠" },
+    { href: `/${locale}/leaderboard`, label: dict.nav.leaderboard, icon: "🏆" },
+    { href: `/${locale}/profile`, label: dict.nav.profile, icon: "👤" },
+  ];
 
   return (
     <aside className="hidden md:flex flex-col w-64 border-r bg-white h-screen sticky top-0">
       <div className="p-6 border-b">
-        <Link href="/dashboard">
+        <Link href={`/${locale}/dashboard`}>
           <LogoFull />
         </Link>
       </div>

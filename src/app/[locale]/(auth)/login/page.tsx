@@ -1,10 +1,19 @@
 import { AuthForm } from "@/components/auth/auth-form";
 import { LogoFull } from "@/components/logo";
 import Link from "next/link";
+import { getDictionary, hasLocale } from "../../dictionaries";
+import { notFound } from "next/navigation";
 
-export const metadata = { title: "Qeydiyyat" };
+export default async function LoginPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(locale)) notFound();
+  const dict = await getDictionary(locale);
+  const t = dict.login;
 
-export default function RegisterPage() {
   return (
     <div className="min-h-screen flex">
       {/* Left — Branding */}
@@ -17,14 +26,11 @@ export default function RegisterPage() {
             <span className="text-3xl font-bold">Acodemia</span>
           </div>
           <h2 className="text-2xl font-semibold leading-tight">
-            Pulsuz başla,
+            {t.brandSlogan1}
             <br />
-            kodlamağı öyrən.
+            {t.brandSlogan2}
           </h2>
-          <p className="text-white/80 text-lg">
-            20 interaktiv dərs, oyunlaşdırılmış sistem və HTML, CSS, JavaScript,
-            Python dərsləri səni gözləyir.
-          </p>
+          <p className="text-white/80 text-lg">{t.brandDesc}</p>
         </div>
       </div>
 
@@ -35,16 +41,17 @@ export default function RegisterPage() {
             <LogoFull />
           </div>
           <div className="space-y-2 text-center">
-            <h1 className="text-2xl font-bold">Yeni hesab yarat</h1>
-            <p className="text-muted-foreground">
-              Pulsuz qeydiyyatdan keç və kodlamağa başla
-            </p>
+            <h1 className="text-2xl font-bold">{t.title}</h1>
+            <p className="text-muted-foreground">{t.subtitle}</p>
           </div>
-          <AuthForm mode="register" />
+          <AuthForm mode="login" />
           <p className="text-center text-sm text-muted-foreground">
-            Artıq hesabın var?{" "}
-            <Link href="/login" className="text-primary font-medium hover:underline">
-              Daxil ol
+            {t.noAccount}{" "}
+            <Link
+              href={`/${locale}/register`}
+              className="text-primary font-medium hover:underline"
+            >
+              {t.registerLink}
             </Link>
           </p>
         </div>

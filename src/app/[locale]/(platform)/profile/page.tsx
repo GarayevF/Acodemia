@@ -3,10 +3,19 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { getDictionary, hasLocale } from "../../dictionaries";
+import { notFound } from "next/navigation";
 
-export const metadata = { title: "Profil" };
+export default async function ProfilePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(locale)) notFound();
+  const dict = await getDictionary(locale);
+  const t = dict.profile;
 
-export default function ProfilePage() {
   // TODO: Fetch from Supabase
   const profile = {
     name: "Aynur Həsənova",
@@ -14,16 +23,21 @@ export default function ProfilePage() {
     school: "45 nömrəli məktəb",
     xp: 150,
     level: 2,
-    levelTitle: "Kod Kəşfçisi",
+    levelTitle: dict.levels["2"],
     lessonsCompleted: 3,
     quizzesCompleted: 1,
     streak: 3,
     badges: [
-      { id: 1, name: "İlk Addım", icon: "🏅", desc: "İlk dərsi tamamla" },
+      {
+        id: 1,
+        name: locale === "az" ? "İlk Addım" : "First Step",
+        icon: "🏅",
+        desc: locale === "az" ? "İlk dərsi tamamla" : "Complete first lesson",
+      },
     ],
   };
 
-  const levelProgress = 50; // (150-100)/(300-100)*100
+  const levelProgress = 50;
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
@@ -43,7 +57,7 @@ export default function ProfilePage() {
             <p className="text-muted-foreground">{profile.school}</p>
             <div className="flex items-center gap-3 mt-2">
               <Badge className="bg-primary">
-                Səviyyə {profile.level} — {profile.levelTitle}
+                {t.level} {profile.level} — {profile.levelTitle}
               </Badge>
               <Badge variant="outline">{profile.xp} XP</Badge>
             </div>
@@ -54,17 +68,19 @@ export default function ProfilePage() {
       {/* XP Progress */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Səviyyə irəliləyişi</CardTitle>
+          <CardTitle className="text-base">{t.levelProgress}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex justify-between text-sm mb-2">
-            <span>Səviyyə {profile.level}</span>
+            <span>
+              {t.level} {profile.level}
+            </span>
             <span>{profile.xp} / 300 XP</span>
-            <span>Səviyyə 3</span>
+            <span>{t.level} 3</span>
           </div>
           <Progress value={levelProgress} className="h-3" />
           <p className="text-sm text-muted-foreground mt-2">
-            Növbəti səviyyəyə {300 - profile.xp} XP qalıb
+            {t.xpToNext.replace("{xp}", String(300 - profile.xp))}
           </p>
         </CardContent>
       </Card>
@@ -75,26 +91,26 @@ export default function ProfilePage() {
           <div className="text-3xl font-bold text-primary">
             {profile.lessonsCompleted}
           </div>
-          <p className="text-sm text-muted-foreground">Tamamlanan dərs</p>
+          <p className="text-sm text-muted-foreground">{t.completedLessons}</p>
         </Card>
         <Card className="p-5 text-center">
           <div className="text-3xl font-bold text-primary">
             {profile.quizzesCompleted}
           </div>
-          <p className="text-sm text-muted-foreground">Tamamlanan quiz</p>
+          <p className="text-sm text-muted-foreground">{t.completedQuizzes}</p>
         </Card>
         <Card className="p-5 text-center">
           <div className="text-3xl font-bold text-primary">
-            {profile.streak} gün
+            {profile.streak} {t.days}
           </div>
-          <p className="text-sm text-muted-foreground">Ardıcıl giriş</p>
+          <p className="text-sm text-muted-foreground">{t.streak}</p>
         </Card>
       </div>
 
       {/* Badges */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Nişanlar</CardTitle>
+          <CardTitle className="text-base">{t.badges}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
@@ -112,7 +128,7 @@ export default function ProfilePage() {
             ))}
             <Separator className="my-2" />
             <p className="text-sm text-muted-foreground">
-              Daha çox dərs tamamla, daha çox nişan qazan!
+              {t.badgesEncourage}
             </p>
           </div>
         </CardContent>

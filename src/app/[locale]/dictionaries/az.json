@@ -1,0 +1,191 @@
+{
+  "meta": {
+    "title": "Acodemia — Kodlamanı öyrən",
+    "titleTemplate": "%s | Acodemia",
+    "description": "Azərbaycan dilində interaktiv kodlama platforması. HTML, CSS, JavaScript və Python öyrən."
+  },
+  "nav": {
+    "dashboard": "İdarə paneli",
+    "lessons": "Dərslər",
+    "playground": "Kod meydançası",
+    "quiz": "Quizlər",
+    "leaderboard": "Liderlik",
+    "profile": "Profil",
+    "logout": "Çıxış",
+    "login": "Daxil ol",
+    "register": "Pulsuz başla"
+  },
+  "home": {
+    "badge": "Oyunlaşdırılmış kodlama platforması",
+    "heroTitle1": "Kodlamanı öyrən,",
+    "heroTitle2": "gələcəyini",
+    "heroTitle3": "qur.",
+    "heroDesc": "Azərbaycan dilində interaktiv dərslər ilə HTML, CSS, JavaScript və Python öyrən. XP qazan, səviyyə artır, liderlik cədvəlində yarış!",
+    "startFree": "Pulsuz başla →",
+    "seeLessons": "Dərsləri gör",
+    "freeCheck": "Tamamilə pulsuz",
+    "azCheck": "Azərbaycan dilində",
+    "realCodeCheck": "Real kod yaz",
+    "whyTitle": "Niyə Acodemia?",
+    "whyDesc": "Kodlamanı əyləncəli və əlçatan edən xüsusiyyətlər",
+    "features": [
+      {
+        "icon": "💻",
+        "title": "Real kod yaz",
+        "desc": "Brauzerində kod yaz və nəticəni dərhal gör. Heç bir quraşdırma lazım deyil."
+      },
+      {
+        "icon": "🎮",
+        "title": "Oyunlaşdırılmış təhsil",
+        "desc": "XP qazan, səviyyə artır, nişanlar topla və liderlik cədvəlində yarış."
+      },
+      {
+        "icon": "🇦🇿",
+        "title": "Azərbaycan dilində",
+        "desc": "Bütün dərslər, izahlar və tapşırıqlar Azərbaycan dilindədir."
+      },
+      {
+        "icon": "📚",
+        "title": "İnformatika müfredatı",
+        "desc": "Milli imtahan müfredatına uyğun dərslər. Nəzəriyyədən praktikaya keçid."
+      },
+      {
+        "icon": "🏆",
+        "title": "Quizlər və imtahanlar",
+        "desc": "Biliklərini yoxla, zamanlı quizlərdə yarış və nəticələrini izlə."
+      },
+      {
+        "icon": "📱",
+        "title": "Hər yerdən əlçatan",
+        "desc": "Kompüter, planşet və ya telefon — istədiyin cihazdan daxil ol."
+      }
+    ],
+    "curriculumTitle": "Müfredat",
+    "curriculumDesc": "4 modul, 20 interaktiv dərs",
+    "module": "Modul",
+    "lessonCount": "dərs",
+    "ctaTitle": "Kodlamağa hazırsan?",
+    "ctaDesc": "Pulsuz qeydiyyatdan keç və ilk dərsini bu gün tamamla.",
+    "ctaButton": "İndi başla →",
+    "copyright": "© 2026 Acodemia. Bütün hüquqlar qorunur.",
+    "location": "Bakı, Azərbaycan"
+  },
+  "login": {
+    "pageTitle": "Daxil ol",
+    "brandSlogan1": "Kodlamanı öyrən,",
+    "brandSlogan2": "gələcəyini qur.",
+    "brandDesc": "Azərbaycan dilində interaktiv dərslər, oyunlaşdırılmış təhsil və real kod yazma təcrübəsi.",
+    "title": "Hesabına daxil ol",
+    "subtitle": "E-poçt və şifrənlə daxil ol",
+    "noAccount": "Hesabın yoxdur?",
+    "registerLink": "Qeydiyyatdan keç"
+  },
+  "register": {
+    "pageTitle": "Qeydiyyat",
+    "brandSlogan1": "Pulsuz başla,",
+    "brandSlogan2": "kodlamağı öyrən.",
+    "brandDesc": "20 interaktiv dərs, oyunlaşdırılmış sistem və HTML, CSS, JavaScript, Python dərsləri səni gözləyir.",
+    "title": "Yeni hesab yarat",
+    "subtitle": "Pulsuz qeydiyyatdan keç və kodlamağa başla",
+    "hasAccount": "Artıq hesabın var?",
+    "loginLink": "Daxil ol"
+  },
+  "auth": {
+    "fullName": "Ad və Soyad",
+    "fullNamePlaceholder": "Adınızı daxil edin",
+    "email": "E-poçt",
+    "emailPlaceholder": "nümunə@mail.com",
+    "password": "Şifrə",
+    "passwordPlaceholder": "Minimum 6 simvol",
+    "loading": "Gözləyin...",
+    "loginButton": "Daxil ol",
+    "registerButton": "Qeydiyyatdan keç"
+  },
+  "dashboard": {
+    "pageTitle": "İdarə paneli",
+    "welcome": "Xoş gəldin! 👋",
+    "welcomeDesc": "Kodlama səyahətinə davam et",
+    "level": "Səviyyə",
+    "completedLessons": "Tamamlanan dərslər",
+    "badges": "Nişanlar",
+    "continueTitle": "Davam et",
+    "moduleLesson": "Modul {module} — Dərs {lesson}",
+    "xpReward": "+{xp} XP qazanacaqsan",
+    "continue": "Davam et →",
+    "modulesTitle": "Modullar",
+    "module": "Modul",
+    "lessonCount": "dərs"
+  },
+  "lessons": {
+    "pageTitle": "Dərslər",
+    "title": "Dərslər",
+    "subtitle": "4 modul, 20 interaktiv dərs",
+    "module": "Modul",
+    "lessonCount": "dərs",
+    "start": "Başla →",
+    "notFound": "Dərs tapılmadı",
+    "notFoundDesc": "Bu dərs hələ hazır deyil. Tezliklə əlavə olunacaq!",
+    "backToLessons": "Dərslərə qayıt",
+    "lesson": "Dərs",
+    "complete": "Dərsi tamamla",
+    "completed": "Tamamlandı ✓",
+    "prevLesson": "← Əvvəlki dərs",
+    "nextLesson": "Növbəti dərs →"
+  },
+  "playground": {
+    "title": "Kod Meydançası",
+    "desc": "Sərbəst kod yaz və sına — istədiyin dildə!"
+  },
+  "quiz": {
+    "pageTitle": "Quizlər",
+    "title": "Quizlər",
+    "subtitle": "Biliklərini yoxla və XP qazan",
+    "questions": "sual",
+    "minutes": "dəqiqə",
+    "start": "Başla →",
+    "startQuiz": "Quizə başla",
+    "notFound": "Quiz tapılmadı",
+    "backToQuizzes": "Quizlərə qayıt",
+    "questionOf": "Sual {current} / {total}",
+    "explanation": "İzah:",
+    "nextQuestion": "Növbəti sual →",
+    "finishQuiz": "Quizi bitir",
+    "quizCompleted": "Quiz tamamlandı!",
+    "correctAnswers": "{score} / {total} düzgün cavab",
+    "xpEarned": "+{xp} XP qazandın!",
+    "backToQuizzesBtn": "Quizlərə qayıt",
+    "toDashboard": "İdarə paneli"
+  },
+  "leaderboard": {
+    "pageTitle": "Liderlik cədvəli",
+    "title": "Liderlik cədvəli",
+    "subtitle": "Ən yüksək XP-yə sahib şagirdlər",
+    "all": "Hamısı",
+    "level": "Səviyyə"
+  },
+  "profile": {
+    "pageTitle": "Profil",
+    "levelProgress": "Səviyyə irəliləyişi",
+    "level": "Səviyyə",
+    "xpToNext": "Növbəti səviyyəyə {xp} XP qalıb",
+    "completedLessons": "Tamamlanan dərs",
+    "completedQuizzes": "Tamamlanan quiz",
+    "streak": "Ardıcıl giriş",
+    "days": "gün",
+    "badges": "Nişanlar",
+    "badgesEncourage": "Daha çox dərs tamamla, daha çox nişan qazan!"
+  },
+  "modules": {
+    "1": "Kompüterlər və Məntiq",
+    "2": "HTML & CSS",
+    "3": "JavaScript Əsasları",
+    "4": "Python Giriş"
+  },
+  "levels": {
+    "1": "Yeni Başlayan",
+    "2": "Kod Kəşfçisi",
+    "3": "Proqramçı Şagird",
+    "4": "Veb Ustası",
+    "5": "Kod Sehrbazı"
+  }
+}
