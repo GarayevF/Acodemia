@@ -2,7 +2,7 @@
   "meta": {
     "title": "Acodemia — Learn to Code",
     "titleTemplate": "%s | Acodemia",
-    "description": "Interactive coding platform. Learn HTML, CSS, JavaScript and Python."
+    "description": "Interactive coding platform. Learn dozens of programming languages."
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -20,7 +20,7 @@
     "heroTitle1": "Learn to code,",
     "heroTitle2": "build your",
     "heroTitle3": "future.",
-    "heroDesc": "Learn HTML, CSS, JavaScript and Python with interactive lessons. Earn XP, level up, compete on the leaderboard!",
+    "heroDesc": "Learn Python, JavaScript, C++, Java and dozens more programming languages with interactive lessons. Earn XP, level up, compete on the leaderboard!",
     "startFree": "Start free →",
     "seeLessons": "See lessons",
     "freeCheck": "Completely free",

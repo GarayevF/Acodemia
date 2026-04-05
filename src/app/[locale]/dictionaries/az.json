@@ -2,7 +2,7 @@
   "meta": {
     "title": "Acodemia — Kodlamanı öyrən",
     "titleTemplate": "%s | Acodemia",
-    "description": "Azərbaycan dilində interaktiv kodlama platforması. HTML, CSS, JavaScript və Python öyrən."
+    "description": "Azərbaycan dilində interaktiv kodlama platforması. Onlarla proqramlaşdırma dilini öyrən."
   },
   "nav": {
     "dashboard": "İdarə paneli",
@@ -20,7 +20,7 @@
     "heroTitle1": "Kodlamanı öyrən,",
     "heroTitle2": "gələcəyini",
     "heroTitle3": "qur.",
-    "heroDesc": "Azərbaycan dilində interaktiv dərslər ilə HTML, CSS, JavaScript və Python öyrən. XP qazan, səviyyə artır, liderlik cədvəlində yarış!",
+    "heroDesc": "İnteraktiv dərslər ilə Python, JavaScript, C++, Java və daha onlarla proqramlaşdırma dilini öyrən. XP qazan, səviyyə artır, liderlik cədvəlində yarış!",
     "startFree": "Pulsuz başla →",
     "seeLessons": "Dərsləri gör",
     "freeCheck": "Tamamilə pulsuz",
