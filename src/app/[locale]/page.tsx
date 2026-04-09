@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LogoFull, LogoIcon } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { MODULES } from "@/types";
+import { MODULES, LESSON_CATALOG } from "@/types";
 import { getDictionary, hasLocale } from "./dictionaries";
 import { notFound } from "next/navigation";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
@@ -160,23 +160,38 @@ export default async function HomePage({
             <p className="text-muted-foreground text-lg">{t.curriculumDesc}</p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {MODULES.map((mod) => (
-              <div
-                key={mod.id}
-                className="p-6 rounded-2xl border bg-card text-center hover:border-primary/50 transition-colors"
-              >
-                <div className="text-4xl mb-3">{mod.icon}</div>
-                <h3 className="font-semibold mb-1">
-                  {t.module} {mod.id}
-                </h3>
-                <p className="text-primary font-medium">
-                  {dict.modules[String(mod.id) as keyof typeof dict.modules]}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  {mod.lessons} {t.lessonCount}
-                </p>
-              </div>
-            ))}
+            {MODULES.map((mod) => {
+              const moduleLessons = LESSON_CATALOG.filter((l) => l.module === mod.id);
+              return (
+                <div
+                  key={mod.id}
+                  className="p-6 rounded-2xl border bg-card hover:border-primary/50 transition-colors flex flex-col"
+                >
+                  <div className="text-4xl mb-3 text-center">{mod.icon}</div>
+                  <h3 className="font-semibold text-center">
+                    {t.module} {mod.id}
+                  </h3>
+                  <p className="text-primary font-medium text-center">
+                    {dict.modules[String(mod.id) as keyof typeof dict.modules]}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1 mb-4 text-center">
+                    {mod.lessons} {t.lessonCount}
+                  </p>
+                  <ol className="space-y-2 text-sm text-left border-t pt-4">
+                    {moduleLessons.map((lesson, i) => (
+                      <li key={lesson.id} className="flex gap-2">
+                        <span className="text-muted-foreground font-mono text-xs pt-0.5 w-4 shrink-0">
+                          {i + 1}.
+                        </span>
+                        <span className="text-foreground/90">
+                          {locale === "az" ? lesson.title_az : lesson.title_en}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

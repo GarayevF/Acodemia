@@ -120,3 +120,27 @@ export const MODULES = [
   { id: 3, title_az: "JavaScript Əsasları", icon: "⚡", lessons: 5 },
   { id: 4, title_az: "Python Giriş", icon: "🐍", lessons: 5 },
 ] as const;
+
+// Public lesson catalog — visible on the marketing page even when logged out.
+export const LESSON_CATALOG: { id: number; module: number; title_az: string; title_en: string }[] = [
+  { id: 1, module: 1, title_az: "Kompüter necə işləyir?", title_en: "How does a computer work?" },
+  { id: 2, module: 1, title_az: "İnternet və veb səhifələr", title_en: "Internet and web pages" },
+  { id: 3, module: 1, title_az: "Məntiq və alqoritmlər", title_en: "Logic and algorithms" },
+  { id: 4, module: 1, title_az: "İlk kodunuz: \"Salam, Dünya!\"", title_en: "Your first code: \"Hello, World!\"" },
+  { id: 5, module: 1, title_az: "Dəyişənlər və verilən tipləri", title_en: "Variables and data types" },
+  { id: 6, module: 2, title_az: "HTML nədir? İlk səhifəniz", title_en: "What is HTML? Your first page" },
+  { id: 7, module: 2, title_az: "Başlıqlar, paraqraflar, siyahılar", title_en: "Headings, paragraphs, lists" },
+  { id: 8, module: 2, title_az: "Şəkillər və keçidlər", title_en: "Images and links" },
+  { id: 9, module: 2, title_az: "CSS ilə rəngləndirmə", title_en: "Styling with CSS" },
+  { id: 10, module: 2, title_az: "Öz veb səhifənizi yaradın", title_en: "Create your own web page" },
+  { id: 11, module: 3, title_az: "JavaScript nədir?", title_en: "What is JavaScript?" },
+  { id: 12, module: 3, title_az: "Dəyişənlər və operatorlar", title_en: "Variables and operators" },
+  { id: 13, module: 3, title_az: "Şərtlər (if/else)", title_en: "Conditions (if/else)" },
+  { id: 14, module: 3, title_az: "Dövrlər (for, while)", title_en: "Loops (for, while)" },
+  { id: 15, module: 3, title_az: "Funksiyalar və hadisələr", title_en: "Functions and events" },
+  { id: 16, module: 4, title_az: "Python nədir? Niyə Python?", title_en: "What is Python? Why Python?" },
+  { id: 17, module: 4, title_az: "Dəyişənlər və hesablamalar", title_en: "Variables and calculations" },
+  { id: 18, module: 4, title_az: "Siyahılar və lüğətlər", title_en: "Lists and dictionaries" },
+  { id: 19, module: 4, title_az: "Dövrlər və şərtlər", title_en: "Loops and conditions" },
+  { id: 20, module: 4, title_az: "Mini layihə: Kalkulyator proqramı", title_en: "Mini project: Calculator program" },
+];
