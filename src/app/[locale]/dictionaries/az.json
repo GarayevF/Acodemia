@@ -136,6 +136,19 @@
     "title": "Kod Meydançası",
     "desc": "Sərbəst kod yaz və sına — istədiyin dildə!"
   },
+  "editor": {
+    "run": "▶ İcra et",
+    "running": "İcra edilir...",
+    "reset": "Sıfırla",
+    "result": "Nəticə",
+    "preview": "Önbaxış",
+    "runHint": "Kodu icra etmək üçün ▶ düyməsinə basın",
+    "success": "✓ Kod uğurla icra edildi (çıxış yoxdur)",
+    "loadingPython": "Python mühərriki yüklənir...",
+    "pyLoadError": "Python yüklənmədi",
+    "error": "Xəta",
+    "sandboxError": "Sandbox yaradıla bilmədi"
+  },
   "quiz": {
     "pageTitle": "Quizlər",
     "title": "Quizlər",

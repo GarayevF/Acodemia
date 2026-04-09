@@ -136,6 +136,19 @@
     "title": "Playground",
     "desc": "Write and test code freely — in any language!"
   },
+  "editor": {
+    "run": "▶ Run",
+    "running": "Running...",
+    "reset": "Reset",
+    "result": "Output",
+    "preview": "Preview",
+    "runHint": "Press ▶ to run your code",
+    "success": "✓ Code ran successfully (no output)",
+    "loadingPython": "Loading Python engine...",
+    "pyLoadError": "Failed to load Python",
+    "error": "Error",
+    "sandboxError": "Could not create sandbox"
+  },
   "quiz": {
     "pageTitle": "Quizzes",
     "title": "Quizzes",

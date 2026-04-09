@@ -1,15 +1,21 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
 import { Button } from "@/components/ui/button";
 import { loadPyodide } from "@/lib/pyodide";
+import { useDict } from "@/lib/i18n/context";
 
 interface CodeEditorProps {
   language: "html" | "css" | "javascript" | "python";
   defaultValue?: string;
   onCodeChange?: (code: string) => void;
 }
+
+const CSS_DEMO_HTML = `<h1>Hello, World!</h1>
+<p>This is a demo paragraph.</p>
+<button>Click me</button>
+<ul><li>Item 1</li><li>Item 2</li></ul>`;
 
 export function CodeEditor({
   language,
@@ -19,7 +25,11 @@ export function CodeEditor({
   const [code, setCode] = useState(defaultValue);
   const [output, setOutput] = useState("");
   const [isRunning, setIsRunning] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [srcDoc, setSrcDoc] = useState("");
+  const dict = useDict();
+  const t = dict.editor;
+
+  const isWeb = language === "html" || language === "css";
 
   const handleEditorMount: OnMount = (editor) => {
     editor.focus();
@@ -31,46 +41,49 @@ export function CodeEditor({
     onCodeChange?.(newCode);
   }
 
+  // Auto-preview for HTML/CSS with debounce
+  useEffect(() => {
+    if (!isWeb) return;
+    const timer = setTimeout(() => {
+      const doc =
+        language === "css"
+          ? `<!DOCTYPE html><html><head><style>${code}</style></head><body>${CSS_DEMO_HTML}</body></html>`
+          : `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>${code}</body></html>`;
+      setSrcDoc(doc);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [code, language, isWeb]);
+
   async function runCode() {
     setIsRunning(true);
     setOutput("");
 
-    if (language === "html" || language === "css") {
-      // Render HTML/CSS in iframe
-      const htmlContent =
+    if (isWeb) {
+      // Force immediate preview refresh
+      const doc =
         language === "css"
-          ? `<style>${code}</style><div class="demo">CSS nümunəsi</div>`
-          : code;
-      if (iframeRef.current) {
-        const doc = iframeRef.current.contentDocument;
-        if (doc) {
-          doc.open();
-          doc.write(htmlContent);
-          doc.close();
-        }
-      }
-      setOutput("✓ Render edildi");
+          ? `<!DOCTYPE html><html><head><style>${code}</style></head><body>${CSS_DEMO_HTML}</body></html>`
+          : `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>${code}</body></html>`;
+      setSrcDoc(doc);
     } else if (language === "javascript") {
-      // Run JS in sandboxed iframe
       try {
         const logs: string[] = [];
         const iframe = document.createElement("iframe");
         iframe.style.display = "none";
         document.body.appendChild(iframe);
         const win = iframe.contentWindow as unknown as Record<string, unknown>;
-        if (!win) throw new Error("Sandbox yaradıla bilmədi");
+        if (!win) throw new Error(t.sandboxError);
         (win.console as Console).log = (...args: unknown[]) => {
           logs.push(args.map(String).join(" "));
         };
         (win as unknown as { eval: (code: string) => void }).eval(code);
         document.body.removeChild(iframe);
-        setOutput(logs.join("\n") || "✓ Kod uğurla icra edildi (çıxış yoxdur)");
+        setOutput(logs.join("\n") || t.success);
       } catch (err) {
-        setOutput(`Xəta: ${err instanceof Error ? err.message : String(err)}`);
+        setOutput(`${t.error}: ${err instanceof Error ? err.message : String(err)}`);
       }
     } else if (language === "python") {
-      // Python via Pyodide
-      setOutput("Python mühərriki yüklənir...");
+      setOutput(t.loadingPython);
       try {
         const pyodide = await loadPyodide();
         pyodide.runPython(
@@ -79,14 +92,14 @@ export function CodeEditor({
         try {
           pyodide.runPython(code);
           const result = String(pyodide.runPython("sys.stdout.getvalue()"));
-          setOutput(result || "✓ Kod uğurla icra edildi (çıxış yoxdur)");
+          setOutput(result || t.success);
         } catch (runErr) {
           const captured = String(pyodide.runPython("sys.stdout.getvalue()"));
           const msg = runErr instanceof Error ? runErr.message : String(runErr);
-          setOutput((captured ? captured + "\n" : "") + "Xəta:\n" + msg);
+          setOutput((captured ? captured + "\n" : "") + t.error + ":\n" + msg);
         }
       } catch (err) {
-        setOutput(`Python yüklənmədi: ${err instanceof Error ? err.message : String(err)}`);
+        setOutput(`${t.pyLoadError}: ${err instanceof Error ? err.message : String(err)}`);
       }
     }
 
@@ -101,12 +114,12 @@ export function CodeEditor({
           {language}
         </span>
         <Button size="sm" onClick={runCode} disabled={isRunning}>
-          {isRunning ? "İcra edilir..." : "▶ İcra et"}
+          {isRunning ? t.running : t.run}
         </Button>
       </div>
 
       {/* Editor */}
-      <div className="flex-1 min-h-[300px]">
+      <div className="flex-1 min-h-[250px]">
         <Editor
           height="100%"
           language={language === "python" ? "python" : language}
@@ -129,22 +142,21 @@ export function CodeEditor({
       {/* Output */}
       <div className="border-t">
         <div className="px-4 py-2 bg-slate-50 text-xs font-medium text-muted-foreground">
-          Nəticə
+          {isWeb ? t.preview : t.result}
         </div>
-        {(language === "html" || language === "css") ? (
+        {isWeb ? (
           <iframe
-            ref={iframeRef}
-            className="w-full h-40 bg-white"
-            sandbox="allow-scripts"
+            srcDoc={srcDoc}
+            className="w-full h-48 bg-white"
+            sandbox="allow-scripts allow-modals"
             title="preview"
           />
         ) : (
-          <pre className="p-4 text-sm font-mono bg-slate-900 text-slate-100 min-h-[100px] max-h-[200px] overflow-auto">
-            {output || "Kodu icra etmək üçün ▶ düyməsinə basın"}
+          <pre className="p-4 text-sm font-mono bg-slate-900 text-slate-100 min-h-[100px] max-h-[200px] overflow-auto whitespace-pre-wrap">
+            {output || t.runHint}
           </pre>
         )}
       </div>
     </div>
   );
 }
-
