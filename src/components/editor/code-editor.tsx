@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Editor, { type OnMount } from "@monaco-editor/react";
 import { Button } from "@/components/ui/button";
+import { loadPyodide } from "@/lib/pyodide";
 
 interface CodeEditorProps {
   language: "html" | "css" | "javascript" | "python";
@@ -69,19 +70,23 @@ export function CodeEditor({
       }
     } else if (language === "python") {
       // Python via Pyodide
-      setOutput("Python dəstəyi yüklənir...");
+      setOutput("Python mühərriki yüklənir...");
       try {
         const pyodide = await loadPyodide();
-        pyodide.runPython(`
-import sys
-from io import StringIO
-sys.stdout = StringIO()
-`);
-        pyodide.runPython(code);
-        const result = pyodide.runPython("sys.stdout.getvalue()");
-        setOutput(String(result) || "✓ Kod uğurla icra edildi (çıxış yoxdur)");
+        pyodide.runPython(
+          "import sys, io\nsys.stdout = io.StringIO()\nsys.stderr = sys.stdout",
+        );
+        try {
+          pyodide.runPython(code);
+          const result = String(pyodide.runPython("sys.stdout.getvalue()"));
+          setOutput(result || "✓ Kod uğurla icra edildi (çıxış yoxdur)");
+        } catch (runErr) {
+          const captured = String(pyodide.runPython("sys.stdout.getvalue()"));
+          const msg = runErr instanceof Error ? runErr.message : String(runErr);
+          setOutput((captured ? captured + "\n" : "") + "Xəta:\n" + msg);
+        }
       } catch (err) {
-        setOutput(`Xəta: ${err instanceof Error ? err.message : String(err)}`);
+        setOutput(`Python yüklənmədi: ${err instanceof Error ? err.message : String(err)}`);
       }
     }
 
@@ -143,15 +148,3 @@ sys.stdout = StringIO()
   );
 }
 
-// Lazy load Pyodide
-let pyodideInstance: unknown = null;
-async function loadPyodide() {
-  if (pyodideInstance) return pyodideInstance as { runPython: (code: string) => unknown };
-  const script = document.createElement("script");
-  script.src = "https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js";
-  document.head.appendChild(script);
-  await new Promise((resolve) => (script.onload = resolve));
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  pyodideInstance = await (window as any).loadPyodide();
-  return pyodideInstance as { runPython: (code: string) => unknown };
-}
